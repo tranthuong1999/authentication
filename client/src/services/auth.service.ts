@@ -1,4 +1,4 @@
-import { api } from "../api/ axios";
+import { api } from "../api/axios";
 
 export interface User {
     _id: string;

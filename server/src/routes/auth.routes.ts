@@ -27,10 +27,6 @@ router.post(
     refresh
 );
 
-router.post(
-    "/logout",
-    logout
-);
 router.get(
     "/google/callback",
     googleCallback

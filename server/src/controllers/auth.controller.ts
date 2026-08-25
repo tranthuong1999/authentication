@@ -13,13 +13,13 @@ function redirectWithGoogleError(
     error: string,
     res: Response
 ) {
-    const query =
+    const path =
         page === "register"
-            ? `?page=register&error=${error}`
-            : `?error=${error}`;
+            ? "/register"
+            : "/login";
 
     return res.redirect(
-        `${CLIENT_URL}/${query}`
+        `${CLIENT_URL}${path}?error=${error}`
     );
 }
 

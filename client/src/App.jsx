@@ -1,65 +1,26 @@
-import { useContext, useState } from "react";
-import "./App.css";
+import { Toaster } from "sonner";
+import { BrowserRouter } from "react-router-dom";
 
-import {
-  AuthProvider,
-  AuthContext,
-} from "./context/AuthContext";
+import { AuthInitializer } from "./components/AuthInitializer";
+import { AppRoutes } from "./routes/AppRoutes";
 
-import { RegisterForm } from "./components/RegisterForm";
-import LoginForm from "./components/LoginForm";
-import Home from "./components/Home";
-import { getInitialAuthPage } from "./utils/googleAuth";
+import "./styles/auth.css";
 
 function App() {
   return (
-    <AuthProvider>
-      <AuthContent />
-    </AuthProvider>
-  );
-}
-
-function AuthContent() {
-  const auth = useContext(AuthContext);
-
-  const [page, setPage] = useState(getInitialAuthPage);
-
-  if (!auth) {
-    return null;
-  }
-
-  if (auth.loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (auth.user) {
-    return <Home />;
-  }
-
-  if (page === "login") {
-    return (
-      <div>
-        <LoginForm />
-
-        <button
-          onClick={() => setPage("register")}
-        >
-          Create account
-        </button>
-      </div>
-    );
-  }
-
-  return (
-    <div>
-      <RegisterForm />
-
-      <button
-        onClick={() => setPage("login")}
-      >
-        Already have an account?
-      </button>
-    </div>
+    <BrowserRouter>
+      <AuthInitializer>
+        <Toaster
+          position="top-right"
+          richColors
+          closeButton
+          toastOptions={{
+            className: "auth-toast",
+          }}
+        />
+        <AppRoutes />
+      </AuthInitializer>
+    </BrowserRouter>
   );
 }
 

@@ -1,6 +1,4 @@
-export const API_URL =
-    import.meta.env.VITE_API_URL ||
-    "http://localhost:4000";
+export { API_URL } from "../config/env";
 
 export const GOOGLE_ERROR_MESSAGES: Record<string, string> = {
     google_auth_cancelled:
@@ -18,41 +16,3 @@ export const GOOGLE_ERROR_MESSAGES: Record<string, string> = {
     google_password_account:
         "This email was registered with a password. Please sign in with email and password.",
 };
-
-export function consumeGoogleAuthError(): string {
-    const params = new URLSearchParams(
-        window.location.search
-    );
-
-    const error = params.get("error");
-
-    if (!error) {
-        return "";
-    }
-
-    const page = params.get("page");
-    const nextUrl = page
-        ? `/?page=${page}`
-        : "/";
-
-    window.history.replaceState(
-        {},
-        document.title,
-        nextUrl
-    );
-
-    return (
-        GOOGLE_ERROR_MESSAGES[error] ||
-        "Google sign-in failed."
-    );
-}
-
-export function getInitialAuthPage(): "login" | "register" {
-    const page = new URLSearchParams(
-        window.location.search
-    ).get("page");
-
-    return page === "register"
-        ? "register"
-        : "login";
-}

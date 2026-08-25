@@ -1,15 +1,11 @@
 import axios from "axios";
 
+import { API_URL } from "../config/env";
+
 export const api = axios.create({
-    baseURL: "http://localhost:4000",
+    baseURL: API_URL,
     withCredentials: true,
 });
-
-let accessToken: string | null = null;
-
-export function setAccessToken(token: string | null) {
-    accessToken = token;
-}
 
 api.interceptors.response.use(
     (response) => response,
